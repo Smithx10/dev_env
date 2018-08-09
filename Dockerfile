@@ -1,4 +1,4 @@
-FROM base/archlinux
+FROM base/devel
 
 ARG ONPREMISE_HTTP_PROXY
 ARG USERNAME
