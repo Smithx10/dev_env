@@ -20,8 +20,12 @@ if [ -f ~/.aliases ]; then
      . ~/.aliases
 fi
 
+# GOLang
 export GOPATH=$HOME/go
 export PATH=$PATH:$HOME/go/bin
+
+#TERM Colors
+export TERM="xterm-256color"
 
 #PROMPT="%{$fg[white]%}%n@%{$fg[green]%}%m%{$reset_color%} ${PROMPT}"
 PROMPT='${${PROMPT}:+"%F{9}%n%f%F{7}@%f%F{3}%m%f "}%F{4}${_prompt_sorin_pwd}%(!. %B%F{1}#%f%b.)${editor_info[keymap]} '
