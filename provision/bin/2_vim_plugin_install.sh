@@ -88,8 +88,6 @@ copyEtc() {
     cp ${ETC_DIR}/autoload/* ${NVIM_DIR}/autoload
     cp ${ETC_DIR}/init.vim ${NVIM_DIR}
     cp ${ETC_DIR}/tmux.conf ~/.tmux.conf
-    cp ${ETC_DIR}/zpreztorc ~/.zpreztorc
-    cp ${ETC_DIR}/zshrc ~/.zshrc
     cp ${ETC_DIR}/tern-config ~/.tern-config
     cp ${ETC_DIR}/terraform.snippets ${NVIM_DIR}/bundle/vim-snippets/UltiSnips
 }

@@ -1,4 +1,4 @@
-FROM bruce/dev_env_base
+FROM base/archlinux
 
 ARG ONPREMISE_HTTP_PROXY
 ARG USERNAME
@@ -35,8 +35,9 @@ COPY ./provision /tmp/provision
 
 RUN chmod +x ${TMP_BIN}/* \
         && for i in ${TMP_BIN}/*_install.sh; do $i; done \
-        && zsh ${TMP_BIN}/configure_prezto.sh
-        ##&& rm -rf /tmp/provision
+        && zsh ${TMP_BIN}/configure_prezto.sh \
+        && cp ${TMP_ETC}/zshrc ${HOME}/.zshrc \
+        && cp ${TMP_ETC}/zprestorc$ ${HOME}/.zprestorc
 
 RUN su ${USERNAME} -c 'yaourt -Sy --noconfirm \
             powershell-bin \
