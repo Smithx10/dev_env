@@ -1,0 +1,34 @@
+#
+# Executes commands at the start of an interactive session.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
+
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
+eval "$(direnv hook zsh)"
+
+if [ -f ~/.manta ]; then
+     . ~/.manta
+fi 
+
+if [ -f ~/.aliases ]; then
+     . ~/.aliases
+fi
+
+export GOPATH=$HOME/go
+export PATH=$PATH:$HOME/go/bin
+
+#PROMPT="%{$fg[white]%}%n@%{$fg[green]%}%m%{$reset_color%} ${PROMPT}"
+PROMPT='${${PROMPT}:+"%F{9}%n%f%F{7}@%f%F{3}%m%f "}%F{4}${_prompt_sorin_pwd}%(!. %B%F{1}#%f%b.)${editor_info[keymap]} '
+alias vimgo='vim -u ~/.vimrc.go'
+
+# Customize to your needs...
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
