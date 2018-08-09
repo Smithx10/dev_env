@@ -54,20 +54,6 @@ testenv:
 build:
 	@cd image ; cfgt -i ./packer.json5 | packer build ${packerVars} -var 'image_name=${imageName}' -var 'image_version=${imageVersion}' -var 'template_name=${baseTemplate}' -
 
-apply-vsphere:
-	@cd vsphere ; terraform init ; terraform apply ${tfVars} -auto-approve .
-
-destroy-vsphere:
-	@cd vsphere ; terraform destroy ${tfVars} -force .
-
-apply-aws:
-	@cd aws ; terraform init ; terraform apply ${tfVars} -auto-approve .
-
-destroy-aws:
-	@cd aws ; terraform destroy ${tfVars} -force .
-
-clean: destroy-vsphere destroy-aws
-
 ## Print environment for build debugging
 debug:
 	@echo GIT_COMMIT=$(GIT_COMMIT)
