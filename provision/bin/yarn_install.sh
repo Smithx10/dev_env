@@ -3,7 +3,6 @@
 set -eo pipefail
 
 PROVISION_DIR=/tmp/provision
-source ${PROVISION_DIR}/bin/set_proxy.sh
 
 installPkgs() {
   if curl -L github.com | grep "Web Page Blocked"; then
