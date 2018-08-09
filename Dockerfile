@@ -38,7 +38,7 @@ RUN pacman -Sy --noconfirm \
             httpie
 
 RUN chmod +x ${TMP_BIN}/* \
-        && for i in ${TMP_BIN}/*_install.sh; do $i; done \
+        && for i in ${TMP_BIN}/*_install.sh; do echo "Running ${i} ..." && $i; done \
         && zsh ${TMP_BIN}/configure_prezto.sh \
         && cp ${TMP_ETC}/zshrc ${HOME}/.zshrc \
         && cp ${TMP_ETC}/zpreztorc ${HOME}/.zpreztorc \
