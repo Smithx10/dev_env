@@ -33,7 +33,9 @@ RUN pacman -Sy --noconfirm \
             npm \
             yarn \
             cmake \
-    && pip install neovim
+    && pip install \
+            neovim \
+            httpie
 
 RUN chmod +x ${TMP_BIN}/* \
         && for i in ${TMP_BIN}/*_install.sh; do $i; done \
