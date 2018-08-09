@@ -41,7 +41,7 @@ RUN chmod +x ${TMP_BIN}/* \
         && cp ${TMP_ETC}/zpreztorc ${HOME}/.zpreztorc \
         && cp ${TMP_ETC}/aliases ${HOME}/.aliases
 
-RUN su ${USERNAME} -c 'yaourt -Sy --noconfirm \
+RUN su ${USERNAME} -c 'yaourt -Sy --m-arg --skippgpcheck --noconfirm \
             powershell-bin \
             nvm \
             ncurses5-compat-libs'
