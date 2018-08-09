@@ -10,6 +10,8 @@ ENV ONPREMISE_HTTPS_PROXY=${ONPREMISE_HTTP_PROXY}
 ENV USERNAME=${USERNAME}
 ENV https_proxy=${ONPREMISE_HTTP_PROXY}
 
+COPY ./provision /tmp/provision
+
 RUN ${TMP_BIN}/configure_locale.sh
 
 RUN pacman -Sy --noconfirm \
@@ -32,9 +34,6 @@ RUN pacman -Sy --noconfirm \
             yarn \
             cmake \
     && pip install neovim
-
-
-COPY ./provision /tmp/provision
 
 RUN chmod +x ${TMP_BIN}/* \
         && for i in ${TMP_BIN}/*_install.sh; do $i; done \
