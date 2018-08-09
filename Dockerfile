@@ -28,7 +28,8 @@ RUN pacman -Sy --noconfirm \
             nodejs \
             npm \
             yarn \
-            cmake
+            cmake \
+    && pip install neovim
 
 
 COPY ./provision /tmp/provision
@@ -37,7 +38,8 @@ RUN chmod +x ${TMP_BIN}/* \
         && for i in ${TMP_BIN}/*_install.sh; do $i; done \
         && zsh ${TMP_BIN}/configure_prezto.sh \
         && cp ${TMP_ETC}/zshrc ${HOME}/.zshrc \
-        && cp ${TMP_ETC}/zpreztorc ${HOME}/.zpreztorc
+        && cp ${TMP_ETC}/zpreztorc ${HOME}/.zpreztorc \
+        && cp ${TMP_ETC}/aliases ${HOME}/.aliases
 
 RUN su ${USERNAME} -c 'yaourt -Sy --noconfirm \
             powershell-bin \
