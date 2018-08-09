@@ -10,7 +10,7 @@
         vcenter_host: "{{ env `TF_VAR_vsphere_host`}}",
         ssh_password: "{{ env `TF_VAR_ssh_password` }}",
         ssh_username: "{{ env `TF_VAR_ssh_username `}}",
-        http_proxy: "{{ env `TF_VAR_http_proxy` }}"
+        http_proxy: "{{ env `TF_VAR_http_proxy` }}",
         
         image_name: "dev_env"
     },

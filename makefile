@@ -52,7 +52,7 @@ testenv:
 	@[[ ! -z "${TF_VAR_vsphere_password}" ]] && printf "\e[32;1mvariable TF_VAR_vsphere_password defined\e[0m \n" || printf "\e[31;1mvariable TF_VAR_vsphere_password not defined\e[0m \n"
 
 build:
-	@cd image ; cfgt -i ./packer.json5 | packer build ${packerVars} -var 'image_name=${imageName}' -var 'image_version=${imageVersion}' -var 'template_name=${baseTemplate}' -
+	cfgt -i ./packer.json5 | packer build ${packerVars} -var 'image_name=${imageName}' -var 'image_version=${imageVersion}' -var 'template_name=${baseTemplate}' -
 
 ## Print environment for build debugging
 debug:
