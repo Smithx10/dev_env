@@ -10,6 +10,8 @@ ENV ONPREMISE_HTTPS_PROXY=${ONPREMISE_HTTP_PROXY}
 ENV USERNAME=${USERNAME}
 ENV https_proxy=${ONPREMISE_HTTP_PROXY}
 
+RUN ${TMP_BIN}/configure_locale.sh
+
 RUN pacman -Sy --noconfirm \
             base-devel \
             unzip \

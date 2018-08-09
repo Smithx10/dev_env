@@ -15,6 +15,7 @@ REPOS=(
     'https://github.com/google/vim-glaive'
     'https://github.com/leafgarland/typescript-vim'
     'https://github.com/google/vim-codefmt'
+    'https://github.com/google/vim-maktaba'
     'https://github.com/gutenye/json5.vim'
     'https://github.com/kien/ctrlp.vim'
     'https://github.com/Raimondi/delimitMate'
