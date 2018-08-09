@@ -10,6 +10,7 @@ installDirEnv() {
     cd direnv
     make
     make install
+    mv direnv /usr/local/bin/direnv
 }
 
 main() {

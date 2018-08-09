@@ -10,6 +10,7 @@ installEnvChain() {
     cd envchain
     make
     make install
+    mv envchain /usr/local/bin/envchain
 }
 
 main() {
