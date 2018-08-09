@@ -43,6 +43,7 @@ RUN chmod +x ${TMP_BIN}/* \
 
 RUN su ${USERNAME} -c 'yaourt -Sy --noconfirm \
             powershell-bin \
-            nvm'
+            nvm \
+            ncurses5-compat-libs'
 
 RUN pwsh ${TMP_BIN}/powercli_install.ps
