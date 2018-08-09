@@ -1,0 +1,6 @@
+alias td=triton-docker
+alias tc=triton-compose 
+alias tt=triton
+
+alias vi=nvim
+alias vim=nvim
