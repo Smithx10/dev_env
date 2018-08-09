@@ -1,0 +1,142 @@
+// USAGE with unpatched packer: cfgt -i myfile.json5 | packer build -
+// USAGE with patched packer: packer build myfile.json5
+{
+    variables: {
+        // Environment variables pulled from `triton env` or `triton env $(PROFILE_NAME)`
+        vcenter_username: "{{ env `TF_VAR_vsphere_user` }}",
+        vcenter_password: "{{ env `TF_VAR_vsphere_password` }}",
+        vcenter_server: "{{ env `TF_VAR_vsphere_server` }}",
+        vcenter_cluster: "{{ env `TF_VAR_vsphere_cluster` }}",
+        vcenter_host: "{{ env `TF_VAR_vsphere_host`}}",
+        ssh_password: "{{ env `TF_VAR_ssh_password` }}",
+        ssh_username: "{{ env `TF_VAR_ssh_username `}}",
+        http_proxy: "{{ env `TF_VAR_http_proxy` }}"
+        
+        image_name: "dev_env"
+    },
+
+  builders: [
+    {
+      name: "vsphere",
+      type: "vsphere-clone",
+
+      //Connection
+      vcenter_server:       "{{ user `vcenter_server` }}",
+      username:             "{{ user `vcenter_username` }}",
+      password:             "{{ user `vcenter_password` }}",
+      insecure_connection:  "true",
+      // datacenter: "string",
+
+      // VM Location 
+      vm_name:              "{{ user `image_name` }}-{{ timestamp }}",
+      /*folder:               "bs/images/",*/
+      host:                 "{{ user `vcenter_host` }}",
+      cluster:              "{{ user `vcenter_cluster` }}",
+      // resource_pool: "string",
+      // datastore: "string",
+     
+      // VM Location (Vsphere-Clone)
+      template:             "{{ user `template_name` }}",
+     // linked_clone: bool,
+
+      // Hardware
+      /*CPUs:                 int,*/
+      CPU_limit:            -1,
+      /*CPU_reservation:      int,*/
+      /*CPU_hot_plug:         int,*/
+      /*RAM:                  int,*/
+      /*RAM_reservation:      int,*/
+      /*RAM_reserve_all:      bool,*/
+      /*RAM_hot_plug:         bool,*/
+      /*disk_size:            int,*/
+      /*NestedHV:             bool,*/
+      /*configuration_parameters: map,*/
+      /*boot_order:           "string"*/
+
+      // Hardware vsphere-iso
+      /*vm_version:           int,*/
+      /*guest_os_type:        "oracleLinux7_64Guest",*/
+      /*disk_controller_type: "string",*/
+      /*disk_thin_provisioned: bool,*/
+      /*network:              "string",*/
+      /*networkd_card:        "string",*/
+      /*usb_controller:       bool,*/
+
+      // Boot ( vsphere-iso only) 
+      /*boot_wait: "string",*/
+      /*boot_command: []string,*/
+      /*floppy_dirs: []string,*/
+      /*floppy_files: []string,*/
+      /*floppy_img_path: "string",*/
+      /*iso_paths: []string,*/
+
+
+      //Provision
+      communicator:         "ssh",
+      ssh_username:         "{{ user `ssh_password` }}",
+      ssh_password:         "{{ user `ssh_password` }}",
+      /*ssh_private_key_file: "string",*/
+      /*winrm_username:       "string",*/
+      /*winrm_password:       "string",*/
+      /*shutdown_command:     "string",*/
+      /*shutdown_timeout:     "string",*/
+
+      // Postprocessing
+      /*create_snapshot:      bool,*/
+      convert_to_template:  true,
+    },
+    {
+      name: "aws",
+      type: "amazon-ebs",
+
+      access_key: "{{ user `aws_access_key_id` }}",
+      secret_key: "{{ user `aws_secret_access_key` }}",
+      region: "{{ user `aws_region` }}",
+
+      "instance_type": "t2.micro",
+      "source_ami_filter": {
+        "filters": {
+          "name": "{{ user `template_name` }}"
+        },
+        "most_recent": true
+      },
+      run_tags: {
+        Name: "Packer Builder - {{ user `image_name` }}-{{ user `image_version` }}"
+      },
+      run_volume_tags: {
+        Name: "Packer Builder - {{ user `image_name` }}-{{ user `image_version` }}",
+      },
+      "ami_name": "{{ user `image_name` }}-{{ user `image_version` }}",
+      tags: {
+        Name: "{{ user `image_name` }}-{{ user `image_version` }}"
+      },
+      "ssh_username": "centos"
+    },
+  ],
+    provisioners: [
+        {
+            type: "shell",
+            inline: [
+                "mkdir -p /tmp/provision"
+            ]
+        },
+        {
+            type: "file",
+            source: "./provision",
+            destination: "/tmp"
+        },
+        {
+            type: "shell",
+            execute_command: "sudo -S env {{ .Vars }} {{ .Path }}",
+            environment_vars: [
+                "ONPREMISE_HTTP_PROXY={{ user `http_proxy` }}",
+                "ONPREMISE_HTTPS_PROXY={{ user `http_proxy` }}"
+            ],
+            inline: [
+                "chmod +x /tmp/provision/bin/*",
+                "for i in /tmp/provision/bin/*_install.sh; do $i; done",
+                "rm -rf /tmp/provision"
+            ]
+        }
+    ]
+}
