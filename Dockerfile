@@ -37,7 +37,7 @@ RUN chmod +x ${TMP_BIN}/* \
         && for i in ${TMP_BIN}/*_install.sh; do $i; done \
         && zsh ${TMP_BIN}/configure_prezto.sh \
         && cp ${TMP_ETC}/zshrc ${HOME}/.zshrc \
-        && cp ${TMP_ETC}/zprestorc$ ${HOME}/.zprestorc
+        && cp ${TMP_ETC}/zprestorc ${HOME}/.zprestorc
 
 RUN su ${USERNAME} -c 'yaourt -Sy --noconfirm \
             powershell-bin \
