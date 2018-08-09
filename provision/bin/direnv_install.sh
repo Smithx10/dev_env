@@ -13,7 +13,12 @@ installDirEnv() {
     mv direnv /usr/local/bin/direnv
 }
 
+goGet() {
+    go get github.com/cpuguy83/go-md2man
+}
+
 main() {
-   installDirEnv
+    goGet
+    installDirEnv
 }
 main
