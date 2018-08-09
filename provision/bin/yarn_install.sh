@@ -11,7 +11,7 @@ installPkgs() {
     yarn config set https-proxy http://${ONPREMISE_HTTPS_PROXY}
   fi
 
-  yarn add \
+  yarn global add \
     sshp \
     json
 }
