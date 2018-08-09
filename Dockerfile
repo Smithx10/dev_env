@@ -15,7 +15,6 @@ COPY ./provision /tmp/provision
 RUN ${TMP_BIN}/configure_locale.sh
 
 RUN pacman -Sy --noconfirm \
-            base-devel \
             unzip \
             git \
             zsh \
